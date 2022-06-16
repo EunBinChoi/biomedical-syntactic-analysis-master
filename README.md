@@ -3,3 +3,4 @@
   - Web: https://stanfordnlp.github.io/stanza/biomed.html
   - Paper: https://academic.oup.com/jamia/article/28/9/1892/6307885?login=false
   - Online demo: http://stanza.run/bio
+  - Data: https://pubmed.ncbi.nlm.nih.gov/
