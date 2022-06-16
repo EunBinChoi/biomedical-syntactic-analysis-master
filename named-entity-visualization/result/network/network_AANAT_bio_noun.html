@@ -1,0 +1,123 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 1400px;
+            height: 1000px;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "#E8E7DC", "font": {"color": "white"}, "id": 0, "label": "cerebral", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 1, "label": "ASMT", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 2, "label": "astrocytes", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 3, "label": "Arylalkylamine...", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 4, "label": "CA1 region", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 5, "label": "gerbil hippocampus", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 6, "label": "TRPV4", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 7, "label": "AANAT", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 8, "label": "neuronal", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 9, "label": "Melatonin", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 10, "label": "calmodulin-dependent...", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 11, "label": "eye", "shape": "dot", "size": 10}, {"color": "#FCF6AE", "font": {"color": "white"}, "id": 12, "label": "AANAT", "shape": "dot", "size": 20}]);
+        edges = new vis.DataSet([{"color": "#E8E7DC", "from": 12, "title": "16.129032258064516%", "to": 0, "value": 161.29032258064515, "weight": 16.129032258064516}, {"color": "#E8E7DC", "from": 12, "title": "16.129032258064516%", "to": 1, "value": 161.29032258064515, "weight": 16.129032258064516}, {"color": "#E8E7DC", "from": 12, "title": "12.903225806451612%", "to": 2, "value": 129.03225806451613, "weight": 12.903225806451612}, {"color": "#E8E7DC", "from": 12, "title": "12.903225806451612%", "to": 3, "value": 129.03225806451613, "weight": 12.903225806451612}, {"color": "#E8E7DC", "from": 12, "title": "9.67741935483871%", "to": 4, "value": 96.7741935483871, "weight": 9.67741935483871}, {"color": "#E8E7DC", "from": 12, "title": "6.451612903225806%", "to": 5, "value": 64.51612903225806, "weight": 6.451612903225806}, {"color": "#E8E7DC", "from": 12, "title": "6.451612903225806%", "to": 6, "value": 64.51612903225806, "weight": 6.451612903225806}, {"color": "#E8E7DC", "from": 12, "title": "6.451612903225806%", "to": 7, "value": 64.51612903225806, "weight": 6.451612903225806}, {"color": "#E8E7DC", "from": 12, "title": "3.225806451612903%", "to": 8, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 12, "title": "3.225806451612903%", "to": 9, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 12, "title": "3.225806451612903%", "to": 10, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 12, "title": "3.225806451612903%", "to": 11, "value": 32.25806451612903, "weight": 3.225806451612903}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 1400px;
+            height: 1000px;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "#E8E7DC", "font": {"color": "white"}, "id": 0, "label": "mutations", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 1, "label": "pathophysiology", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 2, "label": "alterations", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 3, "label": "pathways", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 4, "label": "infancy", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 5, "label": "therapy", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 6, "label": "prevention", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 7, "label": "puzzle", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 8, "label": "wheel", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 9, "label": "pieces", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 10, "label": "diseases", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 11, "label": "onset", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 12, "label": "Genetics", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 13, "label": "Monogenic", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 14, "label": "feature", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 15, "label": "sides", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 16, "label": "coin", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 17, "label": "cogs", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 18, "label": "pathways", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 19, "label": "case", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 20, "label": "role", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 21, "label": "mineralization", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 22, "label": "function", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 23, "label": "carriers", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 24, "label": "factor", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 25, "label": "risk", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 26, "label": "mutation", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 27, "label": "end", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 28, "label": "candidate", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 29, "label": "phenotype", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 30, "label": "spectrum", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 31, "label": "cases", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 32, "label": "report", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 33, "label": "interaction", "shape": "dot", "size": 10}, {"color": "#FCF6AE", "font": {"color": "white"}, "id": 34, "label": "ABCC6", "shape": "dot", "size": 20}]);
+        edges = new vis.DataSet([{"color": "#E8E7DC", "from": 34, "title": "11.363636363636363%", "to": 0, "value": 113.63636363636363, "weight": 11.363636363636363}, {"color": "#E8E7DC", "from": 34, "title": "4.545454545454546%", "to": 1, "value": 45.45454545454546, "weight": 4.545454545454546}, {"color": "#E8E7DC", "from": 34, "title": "4.545454545454546%", "to": 2, "value": 45.45454545454546, "weight": 4.545454545454546}, {"color": "#E8E7DC", "from": 34, "title": "4.545454545454546%", "to": 3, "value": 45.45454545454546, "weight": 4.545454545454546}, {"color": "#E8E7DC", "from": 34, "title": "4.545454545454546%", "to": 4, "value": 45.45454545454546, "weight": 4.545454545454546}, {"color": "#E8E7DC", "from": 34, "title": "4.545454545454546%", "to": 5, "value": 45.45454545454546, "weight": 4.545454545454546}, {"color": "#E8E7DC", "from": 34, "title": "4.545454545454546%", "to": 6, "value": 45.45454545454546, "weight": 4.545454545454546}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 7, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 8, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 9, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 10, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 11, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 12, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 13, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 14, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 15, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 16, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 17, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 18, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 19, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 20, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 21, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 22, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 23, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 24, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 25, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 26, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 27, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 28, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 29, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 30, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 31, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 32, "value": 22.72727272727273, "weight": 2.272727272727273}, {"color": "#E8E7DC", "from": 34, "title": "2.272727272727273%", "to": 33, "value": 22.72727272727273, "weight": 2.272727272727273}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

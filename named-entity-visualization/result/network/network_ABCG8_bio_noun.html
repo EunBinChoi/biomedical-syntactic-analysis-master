@@ -1,0 +1,123 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 1400px;
+            height: 1000px;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "#E8E7DC", "font": {"color": "white"}, "id": 0, "label": "gallbladder...", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 1, "label": "cardiovascular", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 2, "label": "ABCG8 gene", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 3, "label": "CAD", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 4, "label": "atorvastatin", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 5, "label": "gallstone", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 6, "label": "ABCG8...", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 7, "label": "ABO variants", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 8, "label": "coronary artery", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 9, "label": "GBC", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 10, "label": "intestinal", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 11, "label": "CVD", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 12, "label": "sterols", "shape": "dot", "size": 10}, {"color": "#FCF6AE", "font": {"color": "white"}, "id": 13, "label": "ABCG8", "shape": "dot", "size": 20}]);
+        edges = new vis.DataSet([{"color": "#E8E7DC", "from": 13, "title": "19.35483870967742%", "to": 0, "value": 193.5483870967742, "weight": 19.35483870967742}, {"color": "#E8E7DC", "from": 13, "title": "19.35483870967742%", "to": 1, "value": 193.5483870967742, "weight": 19.35483870967742}, {"color": "#E8E7DC", "from": 13, "title": "12.903225806451612%", "to": 2, "value": 129.03225806451613, "weight": 12.903225806451612}, {"color": "#E8E7DC", "from": 13, "title": "6.451612903225806%", "to": 3, "value": 64.51612903225806, "weight": 6.451612903225806}, {"color": "#E8E7DC", "from": 13, "title": "6.451612903225806%", "to": 4, "value": 64.51612903225806, "weight": 6.451612903225806}, {"color": "#E8E7DC", "from": 13, "title": "6.451612903225806%", "to": 5, "value": 64.51612903225806, "weight": 6.451612903225806}, {"color": "#E8E7DC", "from": 13, "title": "6.451612903225806%", "to": 6, "value": 64.51612903225806, "weight": 6.451612903225806}, {"color": "#E8E7DC", "from": 13, "title": "6.451612903225806%", "to": 7, "value": 64.51612903225806, "weight": 6.451612903225806}, {"color": "#E8E7DC", "from": 13, "title": "3.225806451612903%", "to": 8, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 13, "title": "3.225806451612903%", "to": 9, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 13, "title": "3.225806451612903%", "to": 10, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 13, "title": "3.225806451612903%", "to": 11, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 13, "title": "3.225806451612903%", "to": 12, "value": 32.25806451612903, "weight": 3.225806451612903}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

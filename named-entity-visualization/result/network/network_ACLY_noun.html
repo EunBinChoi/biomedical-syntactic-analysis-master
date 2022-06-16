@@ -1,0 +1,123 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 1400px;
+            height: 1000px;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "#E8E7DC", "font": {"color": "white"}, "id": 0, "label": "context", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 1, "label": "profile", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 2, "label": "lipogenesis", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 3, "label": "Dysregulation", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 4, "label": "chickens", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 5, "label": "role", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 6, "label": "analysis", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 7, "label": "suppressor", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 8, "label": "target", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 9, "label": "dimorphism", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 10, "label": "broiler", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 11, "label": "conclusion", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 12, "label": "proliferation", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 13, "label": "lipolysis", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 14, "label": "diets", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 15, "label": "findings", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 16, "label": "differences", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 17, "label": "biomarkers", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 18, "label": "pathogenesis", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 19, "label": "Pathway", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 20, "label": "Reprogramming", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 21, "label": "Insights", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 22, "label": "Metabolic", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 23, "label": "metabolism", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 24, "label": "biomarker", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 25, "label": "reduction", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 26, "label": "supplementation", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 27, "label": "Conclusion", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 28, "label": "expression", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 29, "label": "genes", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 30, "label": "levels", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 31, "label": "deposition", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 32, "label": "lipid", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 33, "label": "results", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 34, "label": "expression", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 35, "label": "therapy", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 36, "label": "similarities", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 37, "label": "Microarray", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 38, "label": "study", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 39, "label": "correlations", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 40, "label": "Identification", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 41, "label": "sup", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 42, "label": "therapy", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 43, "label": "analysis", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 44, "label": "Screening", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 45, "label": "LOC105061856", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 46, "label": "inhibitive", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 47, "label": "camel", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 48, "label": "respiration", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 49, "label": "capability", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 50, "label": "modes", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 51, "label": "water", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 52, "label": "deprivation", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 53, "label": "condition", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 54, "label": "dehydration", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 55, "label": "aerobic", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 56, "label": "Reader", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 57, "label": "biosynthesis", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 58, "label": "Progression", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 59, "label": "Up-Regulation", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 60, "label": "functions", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 61, "label": "regulation", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 62, "label": "protein", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 63, "label": "senescence", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 64, "label": "response", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 65, "label": "diet", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 66, "label": "mechanism", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 67, "label": "mice", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 68, "label": "presence", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 69, "label": "trials", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 70, "label": "patients", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 71, "label": "relevance", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 72, "label": "upregulation", "shape": "dot", "size": 10}, {"color": "#FCF6AE", "font": {"color": "white"}, "id": 73, "label": "ACLY", "shape": "dot", "size": 20}]);
+        edges = new vis.DataSet([{"color": "#E8E7DC", "from": 73, "title": "4.716981132075472%", "to": 0, "value": 47.16981132075472, "weight": 4.716981132075472}, {"color": "#E8E7DC", "from": 73, "title": "2.8301886792452833%", "to": 1, "value": 28.301886792452834, "weight": 2.8301886792452833}, {"color": "#E8E7DC", "from": 73, "title": "2.8301886792452833%", "to": 2, "value": 28.301886792452834, "weight": 2.8301886792452833}, {"color": "#E8E7DC", "from": 73, "title": "2.8301886792452833%", "to": 3, "value": 28.301886792452834, "weight": 2.8301886792452833}, {"color": "#E8E7DC", "from": 73, "title": "2.8301886792452833%", "to": 4, "value": 28.301886792452834, "weight": 2.8301886792452833}, {"color": "#E8E7DC", "from": 73, "title": "2.8301886792452833%", "to": 5, "value": 28.301886792452834, "weight": 2.8301886792452833}, {"color": "#E8E7DC", "from": 73, "title": "2.8301886792452833%", "to": 6, "value": 28.301886792452834, "weight": 2.8301886792452833}, {"color": "#E8E7DC", "from": 73, "title": "2.8301886792452833%", "to": 7, "value": 28.301886792452834, "weight": 2.8301886792452833}, {"color": "#E8E7DC", "from": 73, "title": "1.8867924528301887%", "to": 8, "value": 18.867924528301888, "weight": 1.8867924528301887}, {"color": "#E8E7DC", "from": 73, "title": "1.8867924528301887%", "to": 9, "value": 18.867924528301888, "weight": 1.8867924528301887}, {"color": "#E8E7DC", "from": 73, "title": "1.8867924528301887%", "to": 10, "value": 18.867924528301888, "weight": 1.8867924528301887}, {"color": "#E8E7DC", "from": 73, "title": "1.8867924528301887%", "to": 11, "value": 18.867924528301888, "weight": 1.8867924528301887}, {"color": "#E8E7DC", "from": 73, "title": "1.8867924528301887%", "to": 12, "value": 18.867924528301888, "weight": 1.8867924528301887}, {"color": "#E8E7DC", "from": 73, "title": "1.8867924528301887%", "to": 13, "value": 18.867924528301888, "weight": 1.8867924528301887}, {"color": "#E8E7DC", "from": 73, "title": "1.8867924528301887%", "to": 14, "value": 18.867924528301888, "weight": 1.8867924528301887}, {"color": "#E8E7DC", "from": 73, "title": "1.8867924528301887%", "to": 15, "value": 18.867924528301888, "weight": 1.8867924528301887}, {"color": "#E8E7DC", "from": 73, "title": "1.8867924528301887%", "to": 16, "value": 18.867924528301888, "weight": 1.8867924528301887}, {"color": "#E8E7DC", "from": 73, "title": "1.8867924528301887%", "to": 17, "value": 18.867924528301888, "weight": 1.8867924528301887}, {"color": "#E8E7DC", "from": 73, "title": "1.8867924528301887%", "to": 18, "value": 18.867924528301888, "weight": 1.8867924528301887}, {"color": "#E8E7DC", "from": 73, "title": "1.8867924528301887%", "to": 19, "value": 18.867924528301888, "weight": 1.8867924528301887}, {"color": "#E8E7DC", "from": 73, "title": "1.8867924528301887%", "to": 20, "value": 18.867924528301888, "weight": 1.8867924528301887}, {"color": "#E8E7DC", "from": 73, "title": "1.8867924528301887%", "to": 21, "value": 18.867924528301888, "weight": 1.8867924528301887}, {"color": "#E8E7DC", "from": 73, "title": "1.8867924528301887%", "to": 22, "value": 18.867924528301888, "weight": 1.8867924528301887}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 23, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 24, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 25, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 26, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 27, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 28, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 29, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 30, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 31, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 32, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 33, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 34, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 35, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 36, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 37, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 38, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 39, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 40, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 41, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 42, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 43, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 44, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 45, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 46, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 47, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 48, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 49, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 50, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 51, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 52, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 53, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 54, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 55, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 56, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 57, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 58, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 59, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 60, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 61, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 62, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 63, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 64, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 65, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 66, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 67, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 68, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 69, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 70, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 71, "value": 9.433962264150944, "weight": 0.9433962264150944}, {"color": "#E8E7DC", "from": 73, "title": "0.9433962264150944%", "to": 72, "value": 9.433962264150944, "weight": 0.9433962264150944}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

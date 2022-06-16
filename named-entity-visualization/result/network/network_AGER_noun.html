@@ -1,0 +1,123 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 1400px;
+            height: 1000px;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "#E8E7DC", "font": {"color": "white"}, "id": 0, "label": "Han", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 1, "label": "population", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 2, "label": "effect", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 3, "label": "prognosis", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 4, "label": "CONCLUSIONS", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 5, "label": "Analyses", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 6, "label": "Association", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 7, "label": "variants", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 8, "label": "CONCLUSION", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 9, "label": "phenotypes", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 10, "label": "susceptibility", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 11, "label": "Association", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 12, "label": "SNP", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 13, "label": "diagnosis", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 14, "label": "never-smokers", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 15, "label": "variant", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 16, "label": "findings", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 17, "label": "targets", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 18, "label": "biomarkers", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 19, "label": "polymorphism", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 20, "label": "Genome", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 21, "label": "progression", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 22, "label": "databases", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 23, "label": "Atlas", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 24, "label": "microarray", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 25, "label": "Identification", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 26, "label": "genes", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 27, "label": "Oncomine", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 28, "label": "severity", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 29, "label": "presence", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 30, "label": "function", "shape": "dot", "size": 10}, {"color": "#FCF6AE", "font": {"color": "white"}, "id": 31, "label": "AGER", "shape": "dot", "size": 20}]);
+        edges = new vis.DataSet([{"color": "#E8E7DC", "from": 31, "title": "9.523809523809524%", "to": 0, "value": 95.23809523809524, "weight": 9.523809523809524}, {"color": "#E8E7DC", "from": 31, "title": "9.523809523809524%", "to": 1, "value": 95.23809523809524, "weight": 9.523809523809524}, {"color": "#E8E7DC", "from": 31, "title": "4.761904761904762%", "to": 2, "value": 47.61904761904762, "weight": 4.761904761904762}, {"color": "#E8E7DC", "from": 31, "title": "4.761904761904762%", "to": 3, "value": 47.61904761904762, "weight": 4.761904761904762}, {"color": "#E8E7DC", "from": 31, "title": "4.761904761904762%", "to": 4, "value": 47.61904761904762, "weight": 4.761904761904762}, {"color": "#E8E7DC", "from": 31, "title": "4.761904761904762%", "to": 5, "value": 47.61904761904762, "weight": 4.761904761904762}, {"color": "#E8E7DC", "from": 31, "title": "4.761904761904762%", "to": 6, "value": 47.61904761904762, "weight": 4.761904761904762}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 7, "value": 23.80952380952381, "weight": 2.380952380952381}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 8, "value": 23.80952380952381, "weight": 2.380952380952381}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 9, "value": 23.80952380952381, "weight": 2.380952380952381}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 10, "value": 23.80952380952381, "weight": 2.380952380952381}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 11, "value": 23.80952380952381, "weight": 2.380952380952381}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 12, "value": 23.80952380952381, "weight": 2.380952380952381}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 13, "value": 23.80952380952381, "weight": 2.380952380952381}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 14, "value": 23.80952380952381, "weight": 2.380952380952381}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 15, "value": 23.80952380952381, "weight": 2.380952380952381}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 16, "value": 23.80952380952381, "weight": 2.380952380952381}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 17, "value": 23.80952380952381, "weight": 2.380952380952381}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 18, "value": 23.80952380952381, "weight": 2.380952380952381}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 19, "value": 23.80952380952381, "weight": 2.380952380952381}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 20, "value": 23.80952380952381, "weight": 2.380952380952381}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 21, "value": 23.80952380952381, "weight": 2.380952380952381}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 22, "value": 23.80952380952381, "weight": 2.380952380952381}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 23, "value": 23.80952380952381, "weight": 2.380952380952381}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 24, "value": 23.80952380952381, "weight": 2.380952380952381}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 25, "value": 23.80952380952381, "weight": 2.380952380952381}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 26, "value": 23.80952380952381, "weight": 2.380952380952381}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 27, "value": 23.80952380952381, "weight": 2.380952380952381}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 28, "value": 23.80952380952381, "weight": 2.380952380952381}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 29, "value": 23.80952380952381, "weight": 2.380952380952381}, {"color": "#E8E7DC", "from": 31, "title": "2.380952380952381%", "to": 30, "value": 23.80952380952381, "weight": 2.380952380952381}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 1400px;
+            height: 1000px;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "#E8E7DC", "font": {"color": "white"}, "id": 0, "label": "Onset", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 1, "label": "variant", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 2, "label": "part", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 3, "label": "signaling", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 4, "label": "silico", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 5, "label": "expression", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 6, "label": "Crosstalk", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 7, "label": "Patient", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 8, "label": "down-regulation", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 9, "label": "drinkers", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 10, "label": "results", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 11, "label": "susceptibility", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 12, "label": "diagnosis", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 13, "label": "biomarkers", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 14, "label": "findings", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 15, "label": "New", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 16, "label": "Importance", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 17, "label": "Suppression", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 18, "label": "progression", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 19, "label": "transformation", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 20, "label": "downstream", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 21, "label": "disease", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 22, "label": "Links", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 23, "label": "Progression", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 24, "label": "catabolism", "shape": "dot", "size": 10}, {"color": "#FCF6AE", "font": {"color": "white"}, "id": 25, "label": "ADH1A", "shape": "dot", "size": 20}]);
+        edges = new vis.DataSet([{"color": "#E8E7DC", "from": 25, "title": "6.451612903225806%", "to": 0, "value": 64.51612903225806, "weight": 6.451612903225806}, {"color": "#E8E7DC", "from": 25, "title": "6.451612903225806%", "to": 1, "value": 64.51612903225806, "weight": 6.451612903225806}, {"color": "#E8E7DC", "from": 25, "title": "6.451612903225806%", "to": 2, "value": 64.51612903225806, "weight": 6.451612903225806}, {"color": "#E8E7DC", "from": 25, "title": "6.451612903225806%", "to": 3, "value": 64.51612903225806, "weight": 6.451612903225806}, {"color": "#E8E7DC", "from": 25, "title": "6.451612903225806%", "to": 4, "value": 64.51612903225806, "weight": 6.451612903225806}, {"color": "#E8E7DC", "from": 25, "title": "6.451612903225806%", "to": 5, "value": 64.51612903225806, "weight": 6.451612903225806}, {"color": "#E8E7DC", "from": 25, "title": "3.225806451612903%", "to": 6, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 25, "title": "3.225806451612903%", "to": 7, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 25, "title": "3.225806451612903%", "to": 8, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 25, "title": "3.225806451612903%", "to": 9, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 25, "title": "3.225806451612903%", "to": 10, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 25, "title": "3.225806451612903%", "to": 11, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 25, "title": "3.225806451612903%", "to": 12, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 25, "title": "3.225806451612903%", "to": 13, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 25, "title": "3.225806451612903%", "to": 14, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 25, "title": "3.225806451612903%", "to": 15, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 25, "title": "3.225806451612903%", "to": 16, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 25, "title": "3.225806451612903%", "to": 17, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 25, "title": "3.225806451612903%", "to": 18, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 25, "title": "3.225806451612903%", "to": 19, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 25, "title": "3.225806451612903%", "to": 20, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 25, "title": "3.225806451612903%", "to": 21, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 25, "title": "3.225806451612903%", "to": 22, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 25, "title": "3.225806451612903%", "to": 23, "value": 32.25806451612903, "weight": 3.225806451612903}, {"color": "#E8E7DC", "from": 25, "title": "3.225806451612903%", "to": 24, "value": 32.25806451612903, "weight": 3.225806451612903}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

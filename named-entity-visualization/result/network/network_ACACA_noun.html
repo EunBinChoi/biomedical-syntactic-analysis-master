@@ -1,0 +1,123 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 1400px;
+            height: 1000px;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "#E8E7DC", "font": {"color": "white"}, "id": 0, "label": "expression", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 1, "label": "markers", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 2, "label": "performance", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 3, "label": "content", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 4, "label": "pig", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 5, "label": "traits", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 6, "label": "pig", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 7, "label": "mechanisms", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 8, "label": "effect", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 9, "label": "metabolic", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 10, "label": "inhibition", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 11, "label": "lipid", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 12, "label": "communication", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 13, "label": "gene", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 14, "label": "accumulation", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 15, "label": "cattle", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 16, "label": "cellularity", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 17, "label": "polymorphisms", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 18, "label": "extent", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 19, "label": "tissue-specific", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 20, "label": "levels", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 21, "label": "breed", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 22, "label": "differences", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 23, "label": "composition", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 24, "label": "breeds", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 25, "label": "lack", "shape": "dot", "size": 10}, {"color": "#FCF6AE", "font": {"color": "white"}, "id": 26, "label": "ACACA", "shape": "dot", "size": 20}]);
+        edges = new vis.DataSet([{"color": "#E8E7DC", "from": 26, "title": "8.823529411764707%", "to": 0, "value": 88.23529411764707, "weight": 8.823529411764707}, {"color": "#E8E7DC", "from": 26, "title": "5.88235294117647%", "to": 1, "value": 58.8235294117647, "weight": 5.88235294117647}, {"color": "#E8E7DC", "from": 26, "title": "5.88235294117647%", "to": 2, "value": 58.8235294117647, "weight": 5.88235294117647}, {"color": "#E8E7DC", "from": 26, "title": "5.88235294117647%", "to": 3, "value": 58.8235294117647, "weight": 5.88235294117647}, {"color": "#E8E7DC", "from": 26, "title": "5.88235294117647%", "to": 4, "value": 58.8235294117647, "weight": 5.88235294117647}, {"color": "#E8E7DC", "from": 26, "title": "5.88235294117647%", "to": 5, "value": 58.8235294117647, "weight": 5.88235294117647}, {"color": "#E8E7DC", "from": 26, "title": "5.88235294117647%", "to": 6, "value": 58.8235294117647, "weight": 5.88235294117647}, {"color": "#E8E7DC", "from": 26, "title": "2.941176470588235%", "to": 7, "value": 29.41176470588235, "weight": 2.941176470588235}, {"color": "#E8E7DC", "from": 26, "title": "2.941176470588235%", "to": 8, "value": 29.41176470588235, "weight": 2.941176470588235}, {"color": "#E8E7DC", "from": 26, "title": "2.941176470588235%", "to": 9, "value": 29.41176470588235, "weight": 2.941176470588235}, {"color": "#E8E7DC", "from": 26, "title": "2.941176470588235%", "to": 10, "value": 29.41176470588235, "weight": 2.941176470588235}, {"color": "#E8E7DC", "from": 26, "title": "2.941176470588235%", "to": 11, "value": 29.41176470588235, "weight": 2.941176470588235}, {"color": "#E8E7DC", "from": 26, "title": "2.941176470588235%", "to": 12, "value": 29.41176470588235, "weight": 2.941176470588235}, {"color": "#E8E7DC", "from": 26, "title": "2.941176470588235%", "to": 13, "value": 29.41176470588235, "weight": 2.941176470588235}, {"color": "#E8E7DC", "from": 26, "title": "2.941176470588235%", "to": 14, "value": 29.41176470588235, "weight": 2.941176470588235}, {"color": "#E8E7DC", "from": 26, "title": "2.941176470588235%", "to": 15, "value": 29.41176470588235, "weight": 2.941176470588235}, {"color": "#E8E7DC", "from": 26, "title": "2.941176470588235%", "to": 16, "value": 29.41176470588235, "weight": 2.941176470588235}, {"color": "#E8E7DC", "from": 26, "title": "2.941176470588235%", "to": 17, "value": 29.41176470588235, "weight": 2.941176470588235}, {"color": "#E8E7DC", "from": 26, "title": "2.941176470588235%", "to": 18, "value": 29.41176470588235, "weight": 2.941176470588235}, {"color": "#E8E7DC", "from": 26, "title": "2.941176470588235%", "to": 19, "value": 29.41176470588235, "weight": 2.941176470588235}, {"color": "#E8E7DC", "from": 26, "title": "2.941176470588235%", "to": 20, "value": 29.41176470588235, "weight": 2.941176470588235}, {"color": "#E8E7DC", "from": 26, "title": "2.941176470588235%", "to": 21, "value": 29.41176470588235, "weight": 2.941176470588235}, {"color": "#E8E7DC", "from": 26, "title": "2.941176470588235%", "to": 22, "value": 29.41176470588235, "weight": 2.941176470588235}, {"color": "#E8E7DC", "from": 26, "title": "2.941176470588235%", "to": 23, "value": 29.41176470588235, "weight": 2.941176470588235}, {"color": "#E8E7DC", "from": 26, "title": "2.941176470588235%", "to": 24, "value": 29.41176470588235, "weight": 2.941176470588235}, {"color": "#E8E7DC", "from": 26, "title": "2.941176470588235%", "to": 25, "value": 29.41176470588235, "weight": 2.941176470588235}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

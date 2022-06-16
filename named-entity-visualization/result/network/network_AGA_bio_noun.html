@@ -1,0 +1,123 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 1400px;
+            height: 1000px;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "#E8E7DC", "font": {"color": "white"}, "id": 0, "label": "catch-up", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 1, "label": "colitis", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 2, "label": "IUGR", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 3, "label": "forward", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 4, "label": "CMM", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 5, "label": "SGA", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 6, "label": "senescent DP cells", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 7, "label": "5\u03b1-reductase...", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 8, "label": "SRD5A2", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 9, "label": "mitochondrial...", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 10, "label": "androgenic alopecia", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 11, "label": "overweight/obese", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 12, "label": "CAD", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 13, "label": "TLR/MYD88", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 14, "label": "cardiovascular", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 15, "label": "Parathormone", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 16, "label": "testicular...", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 17, "label": "PC", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 18, "label": "exon...", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 19, "label": "placental", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 20, "label": "impairment...", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 21, "label": "Androgenetic...", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 22, "label": "hair", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 23, "label": "genetic disease", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 24, "label": "colorectal cancer", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 25, "label": "maternal...", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 26, "label": "small-for-gestational-age...", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 27, "label": "infective...", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 28, "label": "Neuropathology", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 29, "label": "brain", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 30, "label": "exon...", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 31, "label": "IE", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 32, "label": "Subclinical...", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 33, "label": "NMDA", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 34, "label": "Gut", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 35, "label": "Glutamate", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 36, "label": "M-A line", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 37, "label": "genetic disease", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 38, "label": "CNM", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 39, "label": "HDAC9", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 40, "label": "AA", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 41, "label": "vitamin D", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 42, "label": "Preterm...", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 43, "label": "anterior triangle", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 44, "label": "IgA", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 45, "label": "MIA PaCa-2", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 46, "label": "celiac markers", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 47, "label": "antigliadin", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 48, "label": "human...", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 49, "label": "ankle...", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 50, "label": "prostate cancer", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 51, "label": "57K haplotype", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 52, "label": "CAT TT", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 53, "label": "meat", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 54, "label": "protein 1", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 55, "label": "fetal heart", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 56, "label": "TGCT", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 57, "label": "adenine", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 58, "label": "Its", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 59, "label": "Early-...", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 60, "label": "plumbagin", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 61, "label": "AGA", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 62, "label": "pancreatic...", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 63, "label": "chromosome 7p21.1", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 64, "label": "VDR", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 65, "label": "plumbagin", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 66, "label": "MTRF1", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 67, "label": "plasma", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 68, "label": "neck", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 69, "label": "stem cell", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 70, "label": "GAN", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 71, "label": "LGA", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 72, "label": "SRD5A2", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 73, "label": "CYTBWB2-wb primers", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 74, "label": "Fetal cardiac", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 75, "label": "left ventricles", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 76, "label": "Androgenetic...", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 77, "label": "GRINA", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 78, "label": "arginine", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 79, "label": "fetuses", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 80, "label": "stop codon", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 81, "label": "Reverse", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 82, "label": "CP", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 83, "label": "CFTR variants", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 84, "label": "cerebral", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 85, "label": "EDA2R variant", "shape": "dot", "size": 10}, {"color": "#E8E7DC", "font": {"color": "white"}, "id": 86, "label": "KD", "shape": "dot", "size": 10}, {"color": "#FCF6AE", "font": {"color": "white"}, "id": 87, "label": "AGA", "shape": "dot", "size": 20}]);
+        edges = new vis.DataSet([{"color": "#E8E7DC", "from": 87, "title": "3.4482758620689653%", "to": 0, "value": 34.48275862068965, "weight": 3.4482758620689653}, {"color": "#E8E7DC", "from": 87, "title": "3.4482758620689653%", "to": 1, "value": 34.48275862068965, "weight": 3.4482758620689653}, {"color": "#E8E7DC", "from": 87, "title": "3.4482758620689653%", "to": 2, "value": 34.48275862068965, "weight": 3.4482758620689653}, {"color": "#E8E7DC", "from": 87, "title": "3.4482758620689653%", "to": 3, "value": 34.48275862068965, "weight": 3.4482758620689653}, {"color": "#E8E7DC", "from": 87, "title": "3.103448275862069%", "to": 4, "value": 31.03448275862069, "weight": 3.103448275862069}, {"color": "#E8E7DC", "from": 87, "title": "2.0689655172413794%", "to": 5, "value": 20.689655172413794, "weight": 2.0689655172413794}, {"color": "#E8E7DC", "from": 87, "title": "2.0689655172413794%", "to": 6, "value": 20.689655172413794, "weight": 2.0689655172413794}, {"color": "#E8E7DC", "from": 87, "title": "2.0689655172413794%", "to": 7, "value": 20.689655172413794, "weight": 2.0689655172413794}, {"color": "#E8E7DC", "from": 87, "title": "2.0689655172413794%", "to": 8, "value": 20.689655172413794, "weight": 2.0689655172413794}, {"color": "#E8E7DC", "from": 87, "title": "2.0689655172413794%", "to": 9, "value": 20.689655172413794, "weight": 2.0689655172413794}, {"color": "#E8E7DC", "from": 87, "title": "2.0689655172413794%", "to": 10, "value": 20.689655172413794, "weight": 2.0689655172413794}, {"color": "#E8E7DC", "from": 87, "title": "2.0689655172413794%", "to": 11, "value": 20.689655172413794, "weight": 2.0689655172413794}, {"color": "#E8E7DC", "from": 87, "title": "1.7241379310344827%", "to": 12, "value": 17.241379310344826, "weight": 1.7241379310344827}, {"color": "#E8E7DC", "from": 87, "title": "1.7241379310344827%", "to": 13, "value": 17.241379310344826, "weight": 1.7241379310344827}, {"color": "#E8E7DC", "from": 87, "title": "1.7241379310344827%", "to": 14, "value": 17.241379310344826, "weight": 1.7241379310344827}, {"color": "#E8E7DC", "from": 87, "title": "1.7241379310344827%", "to": 15, "value": 17.241379310344826, "weight": 1.7241379310344827}, {"color": "#E8E7DC", "from": 87, "title": "1.7241379310344827%", "to": 16, "value": 17.241379310344826, "weight": 1.7241379310344827}, {"color": "#E8E7DC", "from": 87, "title": "1.7241379310344827%", "to": 17, "value": 17.241379310344826, "weight": 1.7241379310344827}, {"color": "#E8E7DC", "from": 87, "title": "1.7241379310344827%", "to": 18, "value": 17.241379310344826, "weight": 1.7241379310344827}, {"color": "#E8E7DC", "from": 87, "title": "1.7241379310344827%", "to": 19, "value": 17.241379310344826, "weight": 1.7241379310344827}, {"color": "#E8E7DC", "from": 87, "title": "1.3793103448275863%", "to": 20, "value": 13.793103448275863, "weight": 1.3793103448275863}, {"color": "#E8E7DC", "from": 87, "title": "1.3793103448275863%", "to": 21, "value": 13.793103448275863, "weight": 1.3793103448275863}, {"color": "#E8E7DC", "from": 87, "title": "1.3793103448275863%", "to": 22, "value": 13.793103448275863, "weight": 1.3793103448275863}, {"color": "#E8E7DC", "from": 87, "title": "1.3793103448275863%", "to": 23, "value": 13.793103448275863, "weight": 1.3793103448275863}, {"color": "#E8E7DC", "from": 87, "title": "1.3793103448275863%", "to": 24, "value": 13.793103448275863, "weight": 1.3793103448275863}, {"color": "#E8E7DC", "from": 87, "title": "1.3793103448275863%", "to": 25, "value": 13.793103448275863, "weight": 1.3793103448275863}, {"color": "#E8E7DC", "from": 87, "title": "1.3793103448275863%", "to": 26, "value": 13.793103448275863, "weight": 1.3793103448275863}, {"color": "#E8E7DC", "from": 87, "title": "1.3793103448275863%", "to": 27, "value": 13.793103448275863, "weight": 1.3793103448275863}, {"color": "#E8E7DC", "from": 87, "title": "1.3793103448275863%", "to": 28, "value": 13.793103448275863, "weight": 1.3793103448275863}, {"color": "#E8E7DC", "from": 87, "title": "1.3793103448275863%", "to": 29, "value": 13.793103448275863, "weight": 1.3793103448275863}, {"color": "#E8E7DC", "from": 87, "title": "1.3793103448275863%", "to": 30, "value": 13.793103448275863, "weight": 1.3793103448275863}, {"color": "#E8E7DC", "from": 87, "title": "1.3793103448275863%", "to": 31, "value": 13.793103448275863, "weight": 1.3793103448275863}, {"color": "#E8E7DC", "from": 87, "title": "1.3793103448275863%", "to": 32, "value": 13.793103448275863, "weight": 1.3793103448275863}, {"color": "#E8E7DC", "from": 87, "title": "1.0344827586206897%", "to": 33, "value": 10.344827586206897, "weight": 1.0344827586206897}, {"color": "#E8E7DC", "from": 87, "title": "1.0344827586206897%", "to": 34, "value": 10.344827586206897, "weight": 1.0344827586206897}, {"color": "#E8E7DC", "from": 87, "title": "1.0344827586206897%", "to": 35, "value": 10.344827586206897, "weight": 1.0344827586206897}, {"color": "#E8E7DC", "from": 87, "title": "1.0344827586206897%", "to": 36, "value": 10.344827586206897, "weight": 1.0344827586206897}, {"color": "#E8E7DC", "from": 87, "title": "1.0344827586206897%", "to": 37, "value": 10.344827586206897, "weight": 1.0344827586206897}, {"color": "#E8E7DC", "from": 87, "title": "1.0344827586206897%", "to": 38, "value": 10.344827586206897, "weight": 1.0344827586206897}, {"color": "#E8E7DC", "from": 87, "title": "1.0344827586206897%", "to": 39, "value": 10.344827586206897, "weight": 1.0344827586206897}, {"color": "#E8E7DC", "from": 87, "title": "1.0344827586206897%", "to": 40, "value": 10.344827586206897, "weight": 1.0344827586206897}, {"color": "#E8E7DC", "from": 87, "title": "1.0344827586206897%", "to": 41, "value": 10.344827586206897, "weight": 1.0344827586206897}, {"color": "#E8E7DC", "from": 87, "title": "1.0344827586206897%", "to": 42, "value": 10.344827586206897, "weight": 1.0344827586206897}, {"color": "#E8E7DC", "from": 87, "title": "1.0344827586206897%", "to": 43, "value": 10.344827586206897, "weight": 1.0344827586206897}, {"color": "#E8E7DC", "from": 87, "title": "1.0344827586206897%", "to": 44, "value": 10.344827586206897, "weight": 1.0344827586206897}, {"color": "#E8E7DC", "from": 87, "title": "1.0344827586206897%", "to": 45, "value": 10.344827586206897, "weight": 1.0344827586206897}, {"color": "#E8E7DC", "from": 87, "title": "1.0344827586206897%", "to": 46, "value": 10.344827586206897, "weight": 1.0344827586206897}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 47, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 48, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 49, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 50, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 51, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 52, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 53, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 54, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 55, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 56, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 57, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 58, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 59, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 60, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 61, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 62, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 63, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 64, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 65, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 66, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 67, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 68, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 69, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 70, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.6896551724137931%", "to": 71, "value": 6.8965517241379315, "weight": 0.6896551724137931}, {"color": "#E8E7DC", "from": 87, "title": "0.3448275862068966%", "to": 72, "value": 3.4482758620689657, "weight": 0.3448275862068966}, {"color": "#E8E7DC", "from": 87, "title": "0.3448275862068966%", "to": 73, "value": 3.4482758620689657, "weight": 0.3448275862068966}, {"color": "#E8E7DC", "from": 87, "title": "0.3448275862068966%", "to": 74, "value": 3.4482758620689657, "weight": 0.3448275862068966}, {"color": "#E8E7DC", "from": 87, "title": "0.3448275862068966%", "to": 75, "value": 3.4482758620689657, "weight": 0.3448275862068966}, {"color": "#E8E7DC", "from": 87, "title": "0.3448275862068966%", "to": 76, "value": 3.4482758620689657, "weight": 0.3448275862068966}, {"color": "#E8E7DC", "from": 87, "title": "0.3448275862068966%", "to": 77, "value": 3.4482758620689657, "weight": 0.3448275862068966}, {"color": "#E8E7DC", "from": 87, "title": "0.3448275862068966%", "to": 78, "value": 3.4482758620689657, "weight": 0.3448275862068966}, {"color": "#E8E7DC", "from": 87, "title": "0.3448275862068966%", "to": 79, "value": 3.4482758620689657, "weight": 0.3448275862068966}, {"color": "#E8E7DC", "from": 87, "title": "0.3448275862068966%", "to": 80, "value": 3.4482758620689657, "weight": 0.3448275862068966}, {"color": "#E8E7DC", "from": 87, "title": "0.3448275862068966%", "to": 81, "value": 3.4482758620689657, "weight": 0.3448275862068966}, {"color": "#E8E7DC", "from": 87, "title": "0.3448275862068966%", "to": 82, "value": 3.4482758620689657, "weight": 0.3448275862068966}, {"color": "#E8E7DC", "from": 87, "title": "0.3448275862068966%", "to": 83, "value": 3.4482758620689657, "weight": 0.3448275862068966}, {"color": "#E8E7DC", "from": 87, "title": "0.3448275862068966%", "to": 84, "value": 3.4482758620689657, "weight": 0.3448275862068966}, {"color": "#E8E7DC", "from": 87, "title": "0.3448275862068966%", "to": 85, "value": 3.4482758620689657, "weight": 0.3448275862068966}, {"color": "#E8E7DC", "from": 87, "title": "0.3448275862068966%", "to": 86, "value": 3.4482758620689657, "weight": 0.3448275862068966}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
